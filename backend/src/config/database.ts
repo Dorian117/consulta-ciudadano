@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
 import {env} from './env'; //ruta donde encontrara el archivo.
 
-//Creamos don conexiones, ya que tenemos dos DBs
+//Creamos dos conexiones, ya que tenemos dos DBs
+
+mongoose.set('autoIndex', false);// Desactiva la creación automática de índices
+mongoose.set('autoCreate', false);// Desactiva la creación automática de colecciones
 
 export const dbRegistraduria = mongoose.createConnection();
 export const dbDefensa = mongoose.createConnection();
 
 const opciones = {
-    autoIndex: false, // Desactiva la creación automática de índices
-    autocreate: false, // Desactiva la creación automática de colecciones
     serverSelectionTimeoutMS: 5000, // Tiempo de espera para la selección del servidor
 };
 

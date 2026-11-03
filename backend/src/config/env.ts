@@ -1,6 +1,6 @@
 import { loadEnvFile } from 'node:process';
 
-// Cargara el archivo . env  y verificara el mismo para iniciar el proceso
+// Cargara el archivo .env  y verificara el mismo para iniciar el proceso
 
 try {
     loadEnvFile();
