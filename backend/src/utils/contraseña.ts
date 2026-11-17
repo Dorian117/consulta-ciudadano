@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { randomBytes } from 'node:crypto';
 const RONDAS_BCRYPT = 12; //este tiempo es minusculo para una persona pero para alguien que intente ingresar, es un tiempo que lo frena bastante
 const LONGITUD_MINIMA = 6;
 const BYTES_MAXIMOS = 72;
@@ -29,6 +30,13 @@ export async function compararContraseña(contraseña: string, hash: string): Pr
     return bcrypt.compare(contraseña, hash);
 }
 
+let hashRelleno: Promise<string> | undefined;
+
+export function hashDeRelleno(): Promise<string> {
+    hashRelleno ??= bcrypt.hash(randomBytes(16).toString('hex'), RONDAS_BCRYPT);
+    return hashRelleno;
+}
+
 //si la contraseña ingresada cumple con los datos solicitados, entonces, la convierte en un hash
 //compara la contraseña ingresada con el hash asignado para permitir el paso
 
@@ -39,3 +47,5 @@ export async function compararContraseña(contraseña: string, hash: string): Pr
 //    punto se guardarian como la misma. Se cuentan bytes y no letras porque una "ñ" o un acento ocupan 2.
 // 4) hashearContrasena exige la politica aunque el servicio ya la haya validado: asi nunca se guarda una clave debil.
 // 5) compararContrasena NO exige la politica: en el login solo se compara, y asi no se revela como es una clave valida.
+// 6) hashDeRelleno es un hash bcrypt de una clave al azar que nadie conoce. El login lo usa cuando la cedula no
+//    existe, para gastar el mismo tiempo que con un usuario real. Se calcula una sola vez y se reutiliza.

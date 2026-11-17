@@ -1,8 +1,13 @@
 import express from 'express';
+import helmet from 'helmet';
 import { dbRegistraduria, dbDefensa} from './config/database';
+import { manejadorErrores, rutaNoEncontrada } from './middlewares/manejadorErrores';
+import { rutasAuth } from './routes/authRoutes';
 
 export const app = express();
 
+
+app.use(helmet());
 app.use(express.json()); // Middleware para parsear el cuerpo de las solicitudes como JSON
 
 app.get('/api/salud', (_req, res) => {
@@ -14,10 +19,12 @@ app.get('/api/salud', (_req, res) => {
     }); // Endpoint de prueba para verificar el estado del servidor
 });
 
+app.use('/api/auth', rutasAuth);
 
-import { manejadorErrores, rutaNoEncontrada } from './middlewares/manejadorErrores';
+// Apartado para declarar e identificar errores (siempre al final y en este orden)
 app.use(rutaNoEncontrada);
 app.use(manejadorErrores);
+
 //apartado para conectar con el proceso de declarar e identificar errores
 
 //app es la aplicacion de Express  que permite leer cuerpos en formato JSON y tiene un endpoint de prueba para verificar el estado del servidor y las conexiones a las bases de datos.
