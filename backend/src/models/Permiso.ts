@@ -9,7 +9,7 @@ export interface IPermiso {
     actualizar: boolean;
     eliminar: boolean;
 }
-//aqui asignamos que perfil tiene acceso a que botones de opcion
+//aqui asignamos que perfil tiene acceso a que botones de opcion (tiene permiso para crear o para eliminar o para leer)
 const esquemaPermiso = new Schema<IPermiso>(
     {
         perfilId: {

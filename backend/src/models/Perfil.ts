@@ -7,7 +7,7 @@ export interface IPerfil {
     activo: boolean;
 }
 
-//aqui creamos los rangos permitidos dentro del perfil web
+//aqui creamos los rangos permitidos dentro del perfil web (admin, operador etc)
 
 const esquemaPerfil = new Schema<IPerfil>(
     {

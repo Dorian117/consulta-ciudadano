@@ -36,6 +36,17 @@ function duracionJwt(): string {
 }
 //validar el formato al arrancar evita que el error aparezca recien en el primer login
 
+//PRUEBA
+export function datosAdminInicial(): { cedula: string; nombres: string; correo: string; clave: string } {
+    return {
+        cedula: requerida('ADMIN_INICIAL_CEDULA'),
+        nombres: requerida('ADMIN_INICIAL_NOMBRES'),
+        correo: requerida('ADMIN_INICIAL_CORREO'),
+        clave: requerida('ADMIN_INICIAL_CLAVE'),
+    };
+}
+//PRUEBA
+
 export const env = {
     puerto:Number(process.env.PORT ?? 3000),
     mongoUrl: requerida('MONGO_URI'),

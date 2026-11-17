@@ -8,7 +8,7 @@ export interface IOpcion {
     orden?: number;
 }
 
-//aqui se configuran las opciones que queremos crear dentro de web
+//aqui se configuran las opciones que queremos crear dentro de web (crear eliminar actualizar)
 
 const esquemaOpcion = new Schema<IOpcion>(
     {

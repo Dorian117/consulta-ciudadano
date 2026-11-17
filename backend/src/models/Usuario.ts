@@ -16,7 +16,7 @@ export interface IUsuario {
 
 export type UsuarioDocumento = HydratedDocument<IUsuario>;
 
-//aqui estan los datos de la persona que tendre un perfil, con determinados Permisos para poder acceder a distintas opciones
+//aqui estan los datos de la persona que tendre un perfil, con determinados Permisos para poder acceder a distintas opciones (el administrador sergio  puede leer los datos)
 
 const esquemaUsuario = new Schema<IUsuario>(
     {
