@@ -10,8 +10,15 @@ app.get('/api/salud', (_req, res) => {
         estado: 'OK',
         registraduria: dbRegistraduria.readyState === 1,
         defensa: dbDefensa.readyState === 1,
+        
     }); // Endpoint de prueba para verificar el estado del servidor
 });
+
+
+import { manejadorErrores, rutaNoEncontrada } from './middlewares/manejadorErrores';
+app.use(rutaNoEncontrada);
+app.use(manejadorErrores);
+//apartado para conectar con el proceso de declarar e identificar errores
 
 //app es la aplicacion de Express  que permite leer cuerpos en formato JSON y tiene un endpoint de prueba para verificar el estado del servidor y las conexiones a las bases de datos.
 // api/salud devuelve un objeto JSON con el estado del servidor y el estado de las conexiones a las bases de datos. El estado de la conexión se verifica mediante la propiedad readyState de cada conexión, que devuelve 1 si la conexión está abierta y lista para usarse.
