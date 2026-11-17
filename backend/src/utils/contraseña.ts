@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-const RONDAS_BCRYPT = 12;
+const RONDAS_BCRYPT = 12; //este tiempo es minusculo para una persona pero para alguien que intente ingresar, es un tiempo que lo frena bastante
 const LONGITUD_MINIMA = 6;
 const BYTES_MAXIMOS = 72;
 
@@ -15,7 +15,7 @@ export function cumplePolitica(contraseña: string): boolean {
         /[0-9]/.test(contraseña)
     );
 }
-
+//aqui se deben validar absolutamente todos estos parametros, de otra forma, sera false
 //funcion encargada de revisar que se cumplan los parametros establecidos previamente en env.ts
 
 export async function hashearContraseña(contraseña: string): Promise<string> {
@@ -28,6 +28,9 @@ export async function hashearContraseña(contraseña: string): Promise<string> {
 export async function compararContraseña(contraseña: string, hash: string): Promise<boolean> {
     return bcrypt.compare(contraseña, hash);
 }
+
+//si la contraseña ingresada cumple con los datos solicitados, entonces, la convierte en un hash
+//compara la contraseña ingresada con el hash asignado para permitir el paso
 
 // 1) bcrypt agrega una "sal" aleatoria a cada hash: dos usuarios con la misma contraseña tienen hashes distintos.
 // 2) RONDAS_BCRYPT = 12 hace que cada hash tarde cerca de un cuarto de segundo: lo bastante lento para frenar
