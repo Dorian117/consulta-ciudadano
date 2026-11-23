@@ -8,37 +8,55 @@ import { SesionService } from '../core/sesion.service';
   selector: 'app-login',
   imports: [FormsModule],
   template: `
-    <main class="centro">
-      <form class="tarjeta" (ngSubmit)="ingresar()" novalidate>
-        <h1 class="marca">Consulta de Ciudadanos</h1>
-        <p class="suave">Ingrese con su identificación y contraseña.</p>
+    <div class="pantalla">
+      <aside class="portada" aria-hidden="true">
+        <span class="marca">Consulta de Ciudadanos</span>
+        <p>Registro de ciudadanos y consulta de su estado para la Fuerza Pública.</p>
+      </aside>
+      <main class="centro">
+        <form (ngSubmit)="ingresar()" novalidate>
+          <h1>Iniciar sesión</h1>
+          <p class="suave">Ingrese con su identificación y contraseña.</p>
 
-        @if (sesion.aviso()) {
-          <p class="aviso" role="status">{{ sesion.aviso() }}</p>
-        }
+          @if (sesion.aviso()) {
+            <p class="aviso" role="status">{{ sesion.aviso() }}</p>
+          }
 
-        <label for="cedula">Identificación</label>
-        <input id="cedula" name="cedula" [(ngModel)]="cedula" inputmode="numeric" autocomplete="username" maxlength="10" />
+          <label for="cedula">Identificación</label>
+          <input id="cedula" name="cedula" [(ngModel)]="cedula" inputmode="numeric" autocomplete="username" maxlength="10" />
 
-        <label for="contrasena">Contraseña</label>
-        <input id="contrasena" name="contrasena" type="password" [(ngModel)]="contrasena" autocomplete="current-password" />
+          <label for="contrasena">Contraseña</label>
+          <input id="contrasena" name="contrasena" type="password" [(ngModel)]="contrasena" autocomplete="current-password" />
 
-        @if (error()) {
-          <p class="error" role="alert">{{ error() }}</p>
-        }
+          @if (error()) {
+            <p class="error" role="alert">{{ error() }}</p>
+          }
 
-        <button class="boton" type="submit" [disabled]="enviando()">
-          {{ enviando() ? 'Ingresando…' : 'Ingresar' }}
-        </button>
-      </form>
-    </main>
+          <button class="boton" type="submit" [disabled]="enviando()">
+            {{ enviando() ? 'Ingresando…' : 'Ingresar' }}
+          </button>
+        </form>
+      </main>
+    </div>
   `,
   styles: `
-    .centro { min-height: 100vh; display: grid; place-items: center; padding: 1rem; }
-    form { width: 100%; max-width: 380px; display: grid; gap: 0.6rem; }
-    h1 { font-size: 1.9rem; color: var(--primario-oscuro); }
-    .suave { margin: 0 0 0.5rem; color: var(--suave); }
-    button { margin-top: 0.4rem; }
+    .pantalla { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .portada { background: var(--granate); color: #e8d9d3; padding: clamp(2rem, 6vw, 5rem); display: flex; flex-direction: column; justify-content: flex-end; gap: 1rem; }
+    .portada .marca { color: #fff; font-size: clamp(2.6rem, 5.5vw, 4.5rem); line-height: 1; margin: 0; }
+    .portada p { margin: 0; max-width: 32ch; }
+    .centro { display: grid; place-items: center; padding: 2rem; }
+    form { width: 100%; max-width: 360px; display: grid; gap: 0.3rem; }
+    label { margin-top: 0.7rem; }
+    h1 { color: var(--granate); font-size: 2.1rem; }
+    .suave { margin: 0 0 0.75rem; }
+    button { margin-top: 1.2rem; }
+    @media (max-width: 800px) {
+      .pantalla { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+      .portada { padding: 1.5rem; justify-content: flex-start; }
+      .portada .marca { font-size: 2rem; }
+      .portada p { display: none; }
+      .centro { place-items: start center; padding: 1.5rem 1rem; }
+    }
   `,
 })
 export class Login {

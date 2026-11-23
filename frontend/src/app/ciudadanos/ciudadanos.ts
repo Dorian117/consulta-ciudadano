@@ -147,25 +147,6 @@ const VACIO: Ciudadano = {
       </div>
     }
   `,
-  styles: `
-    .titulo { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .filtros { display: flex; gap: 0.75rem; align-items: end; flex-wrap: wrap; margin: 0.5rem 0 1rem; }
-    .filtros div { min-width: 200px; }
-    .tabla { overflow-x: auto; background: var(--superficie); border: 1px solid var(--borde); border-radius: 10px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--borde); white-space: nowrap; }
-    th { font-size: 0.85rem; color: var(--suave); }
-    .vacio { text-align: center; color: var(--suave); }
-    .acciones { display: flex; gap: 0.4rem; justify-content: flex-end; }
-    .acciones .boton { padding: 0.3rem 0.7rem; font-size: 0.9rem; }
-    .etiqueta { padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--borde); font-size: 0.85rem; }
-    .etiqueta.requerido { background: var(--peligro); color: #fff; }
-    .paginacion { display: flex; gap: 1rem; align-items: center; justify-content: center; margin: 1rem 0; flex-wrap: wrap; }
-    .formulario, .confirmar { margin-top: 1rem; }
-    .rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem; }
-    .botones { display: flex; gap: 0.6rem; margin-top: 1rem; }
-    .exito { color: var(--exito); }
-  `,
 })
 export class Ciudadanos implements OnInit {
   protected readonly sesion = inject(SesionService);

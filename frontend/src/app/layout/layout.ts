@@ -24,19 +24,23 @@ import { SesionService } from '../core/sesion.service';
   `,
   styles: `
     .barra { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
-      padding: 0.7rem 1.25rem; background: var(--primario); color: #fff; }
-    .barra .marca { font-size: 1.4rem; margin: 0; }
-    .usuario { display: flex; align-items: center; gap: 0.6rem; }
-    .usuario .boton { background: transparent; color: #fff; border-color: #fff; padding: 0.3rem 0.8rem; }
-    .cuerpo { display: grid; grid-template-columns: 230px 1fr; min-height: calc(100vh - 56px); }
-    nav { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem; background: var(--superficie); border-right: 1px solid var(--borde); }
-    nav a { padding: 0.6rem 0.8rem; border-radius: 6px; color: var(--texto); text-decoration: none; }
-    nav a:hover { background: var(--borde); }
-    nav a.activa { background: var(--acento); font-weight: 600; }
-    main { padding: 1.5rem; min-width: 0; }
+      padding: 0.75rem 1.5rem; background: var(--superficie); border-top: 3px solid var(--granate); border-bottom: 1px solid var(--linea); }
+    .barra .marca { font-size: 1.5rem; margin: 0; color: var(--granate); }
+    .usuario { display: flex; align-items: center; gap: 0.6rem; color: var(--suave); font-size: 0.92rem; }
+    .usuario em { color: var(--tinta); }
+    .usuario .boton { padding: 0.3rem 0.8rem; font-size: 0.88rem; }
+    .cuerpo { display: grid; grid-template-columns: 230px 1fr; min-height: calc(100vh - 58px); }
+    nav { display: flex; flex-direction: column; gap: 0.15rem; padding: 1.25rem 0; background: var(--superficie); border-right: 1px solid var(--linea); }
+    nav a { padding: 0.6rem 1.5rem; color: var(--tinta); text-decoration: none; border-left: 3px solid transparent; }
+    nav a:hover { background: var(--realce); }
+    nav a.activa { background: var(--realce); border-left-color: var(--granate); font-weight: 600; color: var(--granate); }
+    main { padding: 1.75rem 2rem; min-width: 0; }
     @media (max-width: 700px) {
       .cuerpo { grid-template-columns: 1fr; }
-      nav { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--borde); }
+      nav { flex-direction: row; flex-wrap: wrap; padding: 0.5rem; border-right: 0; border-bottom: 1px solid var(--linea); }
+      nav a { padding: 0.5rem 0.9rem; border-left: 0; border-bottom: 3px solid transparent; }
+      nav a.activa { border-bottom-color: var(--granate); }
+      main { padding: 1.25rem 1rem; }
     }
   `,
 })

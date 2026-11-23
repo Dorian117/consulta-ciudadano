@@ -1,75 +1,166 @@
+/* Estilo global sobrio. RNF de interfaz: Helvetica para el texto, Garamond cursiva para los titulos y colores calidos.
+   Calido aqui significa piedra, granate y laton, sin degradados, sin sombras y sin color de relleno en grandes zonas. */
 :root {
-  --fondo: #fbf4ea;
-  --superficie: #fffaf2;
-  --borde: #e6d5bd;
-  --texto: #3b2a20;
-  --suave: #7a6556;
-  --primario: #b5541c;
-  --primario-oscuro: #8f3f10;
-  --acento: #e0a458;
-  --peligro: #a32a1f;
-  --exito: #3f6b3a;
+  --papel: #edeae5;
+  --superficie: #fbfaf8;
+  --realce: #f3f0eb;
+  --linea: #d8d2c9;
+  --linea-fuerte: #b9b1a5;
+  --tinta: #2b2421;
+  --suave: #6a5f57;
+  --granate: #5e1f2b;
+  --granate-oscuro: #451620;
+  --laton: #9a6b16;
+  --peligro: #a02a1c;
+  --exito: #2f5d34;
+
+  --fuente-texto: Helvetica, Arial, sans-serif;
+  --fuente-titulo: Garamond, 'EB Garamond', Georgia, serif;
+
+  /* Nombres anteriores, por si algun componente todavia los usa. */
+  --fondo: var(--papel);
+  --borde: var(--linea);
+  --texto: var(--tinta);
+  --primario: var(--granate);
+  --primario-oscuro: var(--granate-oscuro);
+  --acento: var(--laton);
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  background: var(--fondo);
-  color: var(--texto);
-  font-family: Helvetica, Arial, sans-serif;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
   font-size: 16px;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 h1, h2, h3, .marca {
-  font-family: Garamond, 'EB Garamond', 'Times New Roman', serif;
+  font-family: var(--fuente-titulo);
   font-style: italic;
   font-weight: 600;
+  line-height: 1.15;
   margin: 0 0 0.5rem;
 }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.3rem; }
 
-button, input, select {
-  font: inherit;
-  color: inherit;
-}
+p { max-width: 70ch; }
+
+/* ---------- Formularios ---------- */
+button, input, select { font: inherit; color: inherit; }
 
 input, select {
   width: 100%;
-  padding: 0.55rem 0.7rem;
+  height: 2.6rem;
+  padding: 0.5rem 0.7rem;
   background: #fff;
-  border: 1px solid var(--borde);
-  border-radius: 6px;
+  border: 1px solid var(--linea-fuerte);
+  border-radius: 3px;
+}
+input:hover:not(:disabled), select:hover:not(:disabled) { border-color: var(--tinta); }
+input:disabled, select:disabled { background: var(--realce); color: var(--suave); }
+
+:focus-visible { outline: 2px solid var(--laton); outline-offset: 2px; }
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--suave);
+  margin-bottom: 0.25rem;
 }
 
-input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
-  outline: 3px solid var(--acento);
-  outline-offset: 1px;
-}
-
-label { display: block; font-size: 0.9rem; color: var(--suave); margin-bottom: 0.2rem; }
-
+/* ---------- Botones ---------- */
 .boton {
-  background: var(--primario);
+  background: var(--granate);
   color: #fff;
-  border: 0;
-  border-radius: 6px;
-  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--granate);
+  border-radius: 3px;
+  padding: 0.5rem 1.05rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.12s, border-color 0.12s, color 0.12s;
 }
-.boton:hover { background: var(--primario-oscuro); }
-.boton:disabled { opacity: 0.55; cursor: default; }
-.boton.secundario { background: transparent; color: var(--primario); border: 1px solid var(--primario); }
-.boton.peligro { background: var(--peligro); }
+.boton:hover { background: var(--granate-oscuro); border-color: var(--granate-oscuro); }
+.boton:disabled { opacity: 0.5; cursor: default; }
 
+.boton.secundario { background: transparent; color: var(--granate); border-color: var(--linea-fuerte); }
+.boton.secundario:hover:not(:disabled) { background: var(--realce); border-color: var(--granate); }
+
+.boton.peligro { background: transparent; color: var(--peligro); border-color: var(--peligro); }
+.boton.peligro:hover { background: var(--peligro); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .boton { transition: none; }
+}
+
+/* ---------- Superficies y mensajes ---------- */
 .tarjeta {
   background: var(--superficie);
-  border: 1px solid var(--borde);
-  border-radius: 10px;
+  border: 1px solid var(--linea);
+  border-radius: 4px;
   padding: 1.25rem;
 }
 
-.error { color: var(--peligro); font-size: 0.92rem; }
-.aviso { color: var(--primario-oscuro); font-size: 0.92rem; }
+.error, .aviso, .exito {
+  max-width: none;
+  margin: 0.25rem 0;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.92rem;
+  border-left: 3px solid;
+}
+.error { color: var(--peligro); background: #f8ecea; }
+.aviso { color: var(--granate); background: #f6efe0; border-color: var(--laton); }
+.exito { color: var(--exito); background: #edf3ec; }
+.suave { color: var(--suave); }
 
-/* Estilo global: Helvetica para el texto y Garamond cursiva para titulos, con colores calidos (RNF de interfaz). */
+/* ---------- Estructura de las pantallas internas (compartida por ciudadanos, reportes y futuras pantallas) ---------- */
+.titulo { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.titulo h2 { margin: 0; }
+
+.filtros { display: flex; gap: 0.75rem; align-items: end; flex-wrap: wrap; margin: 0.75rem 0 1.25rem; }
+.filtros div { min-width: 200px; }
+
+.tabla { overflow-x: auto; background: var(--superficie); border: 1px solid var(--linea); border-radius: 4px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 0.65rem 0.9rem; white-space: nowrap; }
+th { font-size: 0.8rem; font-weight: 600; color: var(--suave); background: var(--realce); border-bottom: 1px solid var(--linea-fuerte); }
+td { border-bottom: 1px solid var(--linea); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: var(--realce); }
+td:first-child { font-variant-numeric: tabular-nums; }
+.vacio { text-align: center; color: var(--suave); padding: 2rem 1rem; }
+
+.acciones { text-align: right; }
+.acciones .boton { padding: 0.25rem 0.65rem; font-size: 0.85rem; }
+.acciones .boton + .boton { margin-left: 0.4rem; }
+
+.etiqueta {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border: 1px solid var(--linea-fuerte);
+  border-radius: 3px;
+  font-size: 0.8rem;
+  color: var(--suave);
+}
+.etiqueta.requerido { background: var(--granate); border-color: var(--granate); color: #fff; }
+
+.paginacion { display: flex; gap: 1rem; align-items: center; justify-content: center; margin: 1.25rem 0; flex-wrap: wrap; color: var(--suave); font-size: 0.92rem; }
+
+.formulario, .confirmar { margin-top: 1.25rem; }
+.confirmar { border-left: 3px solid var(--peligro); }
+.confirmar .boton.peligro { background: var(--peligro); color: #fff; }
+.confirmar .boton.peligro:hover { background: #7f2015; border-color: #7f2015; }
+.rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.9rem; }
+.botones { display: flex; gap: 0.6rem; margin-top: 1.25rem; }
+
+/* 1) Todo el color sale de variables: para cambiar la paleta basta con editar el bloque :root.
+   2) Se evitan sombras, degradados y animaciones de entrada: la unica transicion es la de los botones y se
+      desactiva si la persona pidio menos movimiento.
+   3) El enfoque del teclado es un contorno laton de 2 px, visible sobre el papel y sobre las superficies.
+   4) Las reglas de .titulo, .filtros, .tabla, .etiqueta, etc. estan aqui y no dentro de cada componente para que
+      las pantallas nuevas (por ejemplo Reportes) se vean igual sin repetir estilos. */
