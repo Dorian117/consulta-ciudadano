@@ -118,3 +118,12 @@
 **P: ¿Por que Ionic y Capacitor y no una app nativa en Kotlin?** R: Reutiliza Angular y el equipo ya lo conoce; Capacitor da acceso a la camara y genera el APK con el mismo codigo web.
 **P: ¿Es seguro enviar la clave por HTTP?** R: No; en desarrollo se permite trafico sin cifrar en la red local, y esta documentado como riesgo. En produccion la API debe ir por HTTPS y se quita esa excepcion.
 
+## M3 · Hoja de codigos de barras
+- Es una hoja imprimible con un codigo de barras por cada ciudadano de prueba y dos identificaciones que no existen, para demostrar los tres resultados de la app.
+- Usa Code 128 (lineal): el proyecto es academico y las identificaciones impresas emulan la cedula; no se interpreta el PDF417 binario de la cedula real.
+- JsBarcode dibuja cada codigo como SVG y viene incluido en la carpeta docs, asi se imprime sin internet y nitido a cualquier tamano.
+- Cada tarjeta indica el resultado esperado, y una prueba automatica comprueba que coincide con la base de datos, para que la hoja impresa nunca prometa algo falso.
+
+**P: ¿Por que Code 128 y no el codigo de la cedula real?** R: El PDF417 de la cedula es binario y su lectura e interpretacion requiere el formato oficial; como es un proyecto academico, se emula con una identificacion impresa y se documenta como supuesto.
+**P: ¿Como saben que la hoja no esta desactualizada?** R: Una prueba compara cada resultado esperado de la hoja con lo que hay en la base y falla si cambia.
+

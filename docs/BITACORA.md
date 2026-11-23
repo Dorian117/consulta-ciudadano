@@ -92,3 +92,11 @@
 - **NO verificado:** nada de lo que depende del telefono: la camara y el lector real, el HTTP nativo hacia la IP del computador, el permiso de trafico sin cifrar, y la apariencia en Android. `npx cap add android` y el APK no se hicieron (M4, lo hace Sergio con Android Studio).
 - **Pendiente:** cambiar `URL_SERVIDOR` en `mobile/src/app/config.ts` por la IP real del computador antes de compilar.
 
+## Fase M3 · Hoja de codigos de barras — 2026-11-23 11:12
+- **Archivos:** nuevos `docs/codigos_barras.html`, `docs/vendor/JsBarcode.all.min.js` (JsBarcode 3.12.3, MIT, para imprimir sin internet) y `backend/src/test/hoja.test.ts`; README y PENDIENTES actualizados (seccion de app movil y pasos de M4).
+- **Contenido:** 6 tarjetas Code 128 en SVG: 1000000001 a 1000000004 (los ciudadanos de prueba: 2 Requerido y 2 No requerido) y 3000000001, 3000000002 que no existen (esperado: No encontrado). Cada tarjeta trae el resultado esperado. Hoja A4 con estilo de impresion.
+- **Probar:** `cd backend && npm test`; para imprimir, abrir `docs/codigos_barras.html` en el navegador.
+- **Resultado real:** 43 pruebas del backend pasan (3 nuevas): la hoja tiene 4 + 2 casos, la libreria incluida codifica las 6 identificaciones en Code 128, y lo que promete cada tarjeta coincide con la base real de Atlas.
+- **NO verificado:** el dibujo de los codigos en un navegador. Intente verlo en el panel de vista previa, que no pudo cargar el script relativo; un servidor local improvisado para abrirlo por http fue bloqueado por el entorno y no lo reintente. Tampoco se escaneo ninguno con un telefono.
+- **Pendiente:** abrir la hoja en el navegador antes de imprimir; si un codigo no aparece, es un problema de carga del script `vendor/JsBarcode.all.min.js`.
+
