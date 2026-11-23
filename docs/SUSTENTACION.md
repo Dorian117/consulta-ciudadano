@@ -69,3 +69,22 @@
 **P: ¿Que hacen con las credenciales?** R: Viven solo en .env (ignorado por git), se leen con la funcion nativa de Node y se validan al arrancar; la clave de Atlas se rota y la app usa un usuario con permisos minimos.
 **P: ¿Que quedo sin hacer y por que?** R: Reportes, gestion de usuarios, AES y la app movil; el plan priorizo login, permisos y CRUD, y lo demas esta documentado como alcance futuro.
 
+## W8 · Rediseno sobrio
+- Toda la apariencia sale de variables en :root de styles.css: cambiar la paleta es editar un bloque.
+- Sin sombras, degradados ni animaciones de entrada; la unica transicion (botones) se desactiva si la persona pidio menos movimiento.
+- Helvetica para el texto y Garamond cursiva para los titulos, como pide el requisito no funcional de interfaz.
+- Las reglas de tabla, filtros y botones son globales para que cada pantalla nueva se vea igual sin repetir CSS.
+
+**P: ¿Por que un solo color de acento?** R: Para un aspecto institucional y sobrio; el granate sirve para marca, boton principal y estado Requerido, y el resto es escala de piedra.
+**P: ¿Como se cuida la accesibilidad?** R: Contraste de texto oscuro sobre papel claro, contorno de enfoque visible con teclado y respeto de prefers-reduced-motion.
+
+## W7 · Reporte PDF
+- El servidor arma el PDF con pdfmake a partir de una tabla declarativa; no se usa un navegador sin cabeza (Puppeteer), que seria mas pesado y fragil.
+- Contenido: titulo, filtro aplicado, fecha y hora, total y la tabla; la columna Estado solo aparece con el filtro Todos.
+- Si no hay ciudadanos para el filtro no se genera archivo: responde 404 con el mensaje del requisito. Un fallo interno se registra en consola y al usuario solo le llega el mensaje generico.
+- La ruta exige sesion y permiso de lectura sobre reportes; el frontend pide el PDF con HttpClient para que el interceptor agregue el token.
+- Diseno sobrio: fuente estandar del PDF, grises y el granate como unico acento.
+
+**P: ¿Por que pdfmake y no Puppeteer?** R: pdfmake construye el PDF directamente desde datos, sin navegador; es mas liviano y su resultado es predecible.
+**P: ¿Por que el frontend no abre el PDF con un enlace directo?** R: Un enlace no enviaria el token de sesion; con HttpClient el interceptor lo agrega y ademas se pueden mostrar los errores del servidor.
+

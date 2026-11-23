@@ -54,3 +54,18 @@
 
 - **Verificacion final:** backend `tsc` sin errores y 20 de 20 pruebas; frontend `ng build` sin errores y 8 de 8 pruebas.
 
+## Fase W8 · Rediseno sobrio — 2026-11-23 10:58
+- **Archivos:** `frontend/src/styles.css` (paleta piedra, granate y laton en variables, sin sombras ni degradados; reglas compartidas de tabla, filtros, botones y etiquetas), `login.ts` (dos paneles), `layout.ts` (barra clara con filete granate), `ciudadanos.ts` (sus estilos pasaron al CSS global), `index.html` (theme-color), `angular.json` (analytics desactivado).
+- **Decisiones:** Helvetica y Garamond cursiva (RNF); el granate #5e1f2b es el unico acento; los estilos compartidos viven en styles.css para que las pantallas nuevas no repitan CSS.
+- **Hecho antes en el chat** (capturas de escritorio y celular). **Verificado ahora:** `ng build` sin errores y `ng test` con las pruebas existentes pasando.
+- **No verificado por mi:** el aspecto visual (no lo mire de nuevo).
+
+## Fase W7 · Reporte PDF (HU04, RF-06) — 2026-11-23 10:58
+- **Archivos:** backend nuevos `services/reporteService.ts`, `controllers/reporteController.ts`, `routes/reporteRoutes.ts`, `test/reportes.test.ts`; cambiados `ciudadanoService.ts` (ciudadanosPorEstado, sin paginar), `app.ts`, `test/ayudas.ts` (arrancar devuelve la URL). Dependencias: `pdfmake` 0.3.15 y `@types/pdfmake`. Frontend nuevos `reportes/reportes.ts` y `reportes.spec.ts`; `app.routes.ts` abre Reportes en lugar de "Proximamente".
+- **Ruta:** `GET /api/reportes/ciudadanos?estado=Todos|Requerido|No requerido` (por defecto Todos), con sesion y permiso reportes/leer. PDF con titulo, filtro, fecha y hora (hora de Colombia), total, tabla Identificacion, Nombres, Apellidos (mas Estado si el filtro es Todos) y pie "Pagina x de y". Sin resultados: 404 SIN_RESULTADOS y no se genera archivo. Fallo al generar: 500 con el mensaje del requisito.
+- **Decisiones:** pdfmake con fuente estandar Helvetica (no se incrusta ninguna); armarDocumento es pura para probar el contenido sin leer el PDF; el servicio recibe opcionalmente la funcion de lectura para probar 404 y 500 sin tocar datos reales; el PDF se descarga con un enlace temporal (abrir pestana despues de esperar lo bloquean los navegadores). Se bloquea la descarga de recursos de internet en pdfmake (setUrlAccessPolicy); la politica local NO se restringio porque pdfmake trata el nombre de la fuente estandar como archivo y falla (se probo y se revirtio).
+- **Probar:** `cd backend && npm test`; `cd frontend && npx ng test --watch=false`.
+- **Resultado real:** backend 26 pruebas pasan (6 nuevas: 401, 403, 200 con %PDF y tipo application/pdf, filtro invalido 400, 404, 500, filtro respetado); frontend 10 pasan; `tsc` y `ng build` sin errores. Se genero un PDF de muestra de 45 filas sin errores.
+- **No verificado:** el aspecto visual del PDF (no pude renderizarlo: sin pdftoppm y el panel no abre PDF locales); el boton de la pantalla en el navegador contra el servidor real.
+- **Pendiente:** pdfmake imprime en consola un aviso por no tener politica local; es inofensivo.
+

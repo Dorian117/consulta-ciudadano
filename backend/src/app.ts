@@ -4,6 +4,7 @@ import { dbRegistraduria, dbDefensa} from './config/database';
 import { manejadorErrores, rutaNoEncontrada } from './middlewares/manejadorErrores';
 import { rutasAuth } from './routes/authRoutes';
 import { rutasCiudadanos } from './routes/ciudadanoRoutes';
+import { rutasReportes } from './routes/reporteRoutes';
 
 export const app = express();
 
@@ -22,6 +23,7 @@ app.get('/api/salud', (_req, res) => {
 
 app.use('/api/auth', rutasAuth);
 app.use('/api/ciudadanos', rutasCiudadanos);
+app.use('/api/reportes', rutasReportes);
 
 // Apartado para declarar e identificar errores (siempre al final y en este orden)
 app.use(rutaNoEncontrada);

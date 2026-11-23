@@ -1,0 +1,35 @@
+EXPLICACION DE LO NUEVO EN EL CODIGO
+
+BACKEND
+
+Login (authController.ts y authService.ts). El campo de la clave ahora se llama contrasena, sin enie, para evitar problemas de codificacion. El controlador valida lo que llega y el servicio comprueba la clave, cuenta los intentos fallidos y bloquea la cuenta 15 minutos a los 3 errores. Si la cedula no existe o la clave es mala, la respuesta es siempre la misma, para que nadie pueda averiguar que cedulas estan registradas.
+
+Permisos (middlewares/permisos.ts). La funcion requierePermiso(opcion, accion) se coloca en una ruta despues de exigir sesion. Si no hay sesion responde 401; si el perfil no tiene ese permiso (crear, leer, actualizar o eliminar) responde 403. Los permisos se consultan en la base en cada peticion, asi que un cambio de permisos vale de inmediato.
+
+Menu (services/menuService.ts y rutas /api/auth/menu y /api/auth/yo). El menu devuelve solo las opciones que el perfil puede leer, ordenadas, junto con sus cuatro permisos. La ruta yo devuelve cedula, nombres y perfil del usuario que inicio sesion. La pantalla usa ambas para dibujarse.
+
+API de ciudadanos (ciudadanoService.ts, ciudadanoController.ts y ciudadanoRoutes.ts). Ofrece crear, listar, consultar por cedula, actualizar y eliminar. La lista admite filtro por estado, busqueda por cedula, nombres o apellidos, y paginacion con tope de 100 por pagina. La cedula es texto de 6 a 10 digitos y no se puede cambiar al actualizar. Una cedula repetida responde 409. Cada operacion exige su permiso sobre la opcion ciudadanos. Los datos se validan en el servidor con zod.
+
+Pruebas del backend (carpeta test). Arrancan la aplicacion en un puerto libre y la llaman con peticiones reales contra Atlas. Todo dato de prueba lleva el prefijo zz_test_ y se borra al terminar. Se ejecutan una a una porque cada archivo limpia los datos de prueba y en paralelo se borrarian entre si.
+
+FRONTEND (Angular)
+
+Proxy (proxy.conf.json). Reenvia las llamadas /api al backend en el puerto 3000, de modo que el navegador ve un solo origen y no hace falta abrir CORS.
+
+Sesion (core/sesion.service.ts). Guarda el token, el usuario y el menu. Ofrece iniciar sesion, restaurarla al recargar la pagina, cerrarla, y puede(opcion, accion), que dice si un boton debe mostrarse. El token se guarda en sessionStorage, que se borra al cerrar la pestana.
+
+Interceptor (core/sesion.interceptor.ts). Agrega el token a cada peticion, menos al login. Si el servidor responde que la sesion vencio, cierra la sesion y lleva al login con un aviso.
+
+Guards (core/sesion.guard.ts y opcion.guard.ts). El primero impide entrar sin sesion y la restaura tras recargar. El segundo impide abrir una opcion que el perfil no tiene.
+
+Login (login/login.ts). Formulario de identificacion y contrasena que muestra el mensaje de error exacto que envia el servidor, incluido el tiempo restante de un bloqueo.
+
+Layout (layout/layout.ts). Barra superior con el nombre del usuario y su perfil, boton Salir y menu lateral dibujado con lo que dijo el servidor. En pantallas angostas el menu pasa arriba. Reportes y seguridad llevan a una pagina Proximamente porque estan fuera de esta entrega.
+
+Pantalla de ciudadanos (ciudadanos/ciudadanos.ts y ciudadano.service.ts). Tabla con filtro de estado, buscador y paginacion. Un formulario permite crear y editar, y eliminar pide confirmacion con nombre y cedula. Los botones Nuevo, Editar y Eliminar aparecen segun los permisos. Los errores del servidor se muestran tal cual, porque las reglas de validacion viven solo en el servidor.
+
+Estilos (styles.css). Texto en Helvetica, titulos en Garamond cursiva y colores calidos, como pide el requisito de interfaz.
+
+CIERRE
+
+Se quitaron los datos de prueba del script de base de datos y se reemplazo el archivo de ejemplo de variables por backend/.env.example, con los nombres que realmente lee el codigo. El README explica como ejecutar, y la carpeta docs contiene la bitacora, la preparacion de la sustentacion, la lista de pendientes y la descripcion de la API.

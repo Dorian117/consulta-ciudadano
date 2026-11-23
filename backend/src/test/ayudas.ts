@@ -16,11 +16,12 @@ const PREFIJO = /^zz_test_/;
 let servidor: Server;
 let base = '';
 
-export async function arrancar(): Promise<void> {
+export async function arrancar(): Promise<string> {
     await conectarBasesDeDatos();
     servidor = app.listen(0);
     await once(servidor, 'listening');
     base = `http://127.0.0.1:${(servidor.address() as AddressInfo).port}`;
+    return base;
 }
 
 export async function cerrar(): Promise<void> {

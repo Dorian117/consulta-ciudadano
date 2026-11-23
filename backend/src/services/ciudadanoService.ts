@@ -35,6 +35,10 @@ export async function listarCiudadanos({ estado, q, pagina, limite }: FiltroList
     return { datos, total, pagina, limite };
 }
 
+export async function ciudadanosPorEstado(estado?: ICiudadano['estado']) {
+    return Ciudadano.find(estado ? { estado } : {}).sort({ apellidos: 1, nombres: 1 });
+}
+
 export async function obtenerCiudadano(cedula: string) {
     const ciudadano = await Ciudadano.findOne({ cedula });
     if (!ciudadano) throw noEncontrado();
