@@ -30,3 +30,10 @@
 - **Resultado real:** 3 pruebas pasan (token agregado y no al login, SESION_VENCIDA cierra sesion, puede()). Proxy comprobado: `/api/salud` por el puerto 4200 devolvio `{"estado":"OK","registraduria":true,"defensa":true}`.
 - **Pendiente:** el guard no tiene prueba propia; se ejercita en W4 con el login real.
 
+## Fase W4 · Login y layout — 2026-11-22 20:23
+- **Archivos:** nuevos `login/login.ts` y `login.spec.ts`, `layout/layout.ts`, `paginas/paginas.ts` (Proximamente, SinAcceso), `ciudadanos/ciudadanos.ts` (marcador, se reemplaza en W5), `core/opcion.guard.ts`; cambiados `app.routes.ts`, `app.ts` (app.html y app.css de plantilla borrados), `index.html` (lang es), `styles.css` (Helvetica, Garamond cursiva, colores calidos).
+- **Decisiones:** el login muestra el mensaje exacto del servidor; el menu se dibuja con `/api/auth/menu`; la ruta vacia redirige a la primera opcion del perfil o a /sin-acceso; reportes y seguridad quedan en pagina "Proximamente" (fuera de alcance). El menu pasa a fila superior en pantallas angostas.
+- **Probar:** `cd frontend && npx ng test --watch=false`; con backend y `ng serve`, abrir http://localhost:4200.
+- **Resultado real:** 5 pruebas pasan (3 de sesion + 2 de login); `ng build` sin errores. Verificado en el navegador con un usuario de prueba zz_test_ (no el admin): sin sesion redirige a /login; clave errada muestra "Usuario o contraseña incorrectos"; clave correcta entra a /ciudadanos con las 3 opciones del menu y el nombre y perfil en la barra.
+- **Pendiente:** el usuario de prueba del navegador se borra al cerrar W5.
+

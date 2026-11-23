@@ -40,3 +40,13 @@
 **P: ¿Por que un proxy y no CORS?** R: Con el proxy el frontend y la API parecen del mismo origen en desarrollo; evita abrir CORS en el servidor, que seria una puerta mas.
 **P: ¿Donde guardan el token y que riesgo tiene?** R: En sessionStorage (se pierde al cerrar la pestana). Un script malicioso podria leerlo; la alternativa es una cookie httpOnly, que requiere cambios en el backend.
 
+## W4 · Login y layout
+- El login es un formulario que llama a /api/auth/login y muestra el mensaje que devuelve el servidor, sin reescribirlo.
+- Al entrar se pide el menu y el usuario; la ruta raiz lleva a la primera opcion permitida del perfil.
+- El layout (barra, menu lateral, area de contenido) dibuja el menu con lo que dijo el servidor: no esta escrito en el codigo.
+- Estilo segun el RNF: Helvetica para el texto, Garamond cursiva para titulos y colores calidos con contraste suficiente; en celular el menu pasa arriba.
+- reportes y seguridad apuntan a "Proximamente" porque estan fuera del alcance acordado.
+
+**P: ¿Que pasa si alguien escribe /seguridad en la barra sin permiso?** R: guardOpcion lo devuelve al inicio, y aunque se saltara, el servidor responde 403 en cada peticion.
+**P: ¿Por que el mensaje de error viene del servidor?** R: Para que el texto (incluido el tiempo de bloqueo) viva en un solo lugar y no se desincronice con la regla real.
+
