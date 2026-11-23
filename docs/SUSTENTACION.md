@@ -30,3 +30,13 @@
 **P: ¿Por que la cedula es texto y no numero?** R: Un numero pierde ceros a la izquierda y no es un valor con el que se calcule; es un identificador.
 **P: ¿Como evitan que la busqueda sea un riesgo?** R: El texto se escapa antes de armar la expresion regular y el limite de pagina es maximo 100.
 
+## W3 · Angular base y sesion
+- Angular 22 es compatible con Node 26 (su campo engines lo declara); se verifico antes de crear el proyecto.
+- El proxy del servidor de desarrollo reenvia /api al backend (puerto 3000): el navegador ve un solo origen y no hace falta CORS.
+- SesionService guarda el token y el usuario en signals; el menu que manda el servidor decide que botones se ven.
+- El interceptor pone Authorization: Bearer en cada peticion y, si el servidor dice SESION_VENCIDA, cierra la sesion y vuelve al login.
+- El guard de rutas impide entrar sin sesion y restaura usuario y menu si se recarga la pagina.
+
+**P: ¿Por que un proxy y no CORS?** R: Con el proxy el frontend y la API parecen del mismo origen en desarrollo; evita abrir CORS en el servidor, que seria una puerta mas.
+**P: ¿Donde guardan el token y que riesgo tiene?** R: En sessionStorage (se pierde al cerrar la pestana). Un script malicioso podria leerlo; la alternativa es una cookie httpOnly, que requiere cambios en el backend.
+

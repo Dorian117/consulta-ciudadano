@@ -22,3 +22,11 @@
 - **Probar:** `cd backend && npm test`
 - **Resultado real:** 20 pruebas, 20 pasan (W0 6, W1 6, W2 8). `tsc --noEmit` sin errores. Datos zz_test_ borrados al terminar.
 
+## Fase W3 · Angular base y sesion — 2026-11-22 20:21
+- **Compatibilidad:** `npm view @angular/cli` 22.3.0 declara node `^22.22.3 || ^24.15.0 || >=26.0.0`; el equipo usa Node 26.13, compatible. Proyecto creado con `ng new` (standalone, routing, CSS, sin SSR) dentro de `frontend/`.
+- **Archivos:** `frontend/proxy.conf.json` (/api a localhost:3000) y `angular.json` (proxy y target de pruebas con vitest), `core/sesion.service.ts`, `core/sesion.interceptor.ts`, `core/sesion.guard.ts`, `core/sesion.spec.ts`, `app.config.ts`. Dependencias de desarrollo: vitest y jsdom.
+- **Decisiones:** token en sessionStorage (ver riesgo en el comentario del servicio); el interceptor excluye el login; SESION_VENCIDA o NO_AUTENTICADO fuera del login cierran la sesion y llevan a /login con aviso.
+- **Probar:** `cd frontend && npx ng test --watch=false`; con backend y `npx ng serve` corriendo: `curl localhost:4200/api/salud`.
+- **Resultado real:** 3 pruebas pasan (token agregado y no al login, SESION_VENCIDA cierra sesion, puede()). Proxy comprobado: `/api/salud` por el puerto 4200 devolvio `{"estado":"OK","registraduria":true,"defensa":true}`.
+- **Pendiente:** el guard no tiene prueba propia; se ejercita en W4 con el login real.
+
