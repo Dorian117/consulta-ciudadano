@@ -1,0 +1,47 @@
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+
+/* Mismo estilo sobrio que la web: piedra, granate y laton; Helvetica y Garamond cursiva (RNF de interfaz). */
+:root {
+  --papel: #edeae5;
+  --tinta: #2b2421;
+  --suave: #6a5f57;
+  --granate: #5e1f2b;
+  --peligro: #a02a1c;
+
+  --ion-font-family: Helvetica, Arial, sans-serif;
+  --ion-background-color: var(--papel);
+  --ion-text-color: var(--tinta);
+  --ion-color-primary: #5e1f2b;
+  --ion-color-primary-rgb: 94, 31, 43;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #531b26;
+  --ion-color-primary-tint: #6e3540;
+}
+
+h1, .marca, .estado {
+  font-family: Garamond, 'EB Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 0.5rem;
+}
+
+.pagina { display: grid; gap: 1rem; max-width: 420px; margin: 0 auto; padding: 2.5rem 1rem 1rem; }
+.pagina h1 { font-size: 2.2rem; color: var(--granate); }
+.suave { color: var(--suave); margin: 0; }
+.error { color: var(--peligro); background: #f8ecea; border-left: 3px solid var(--peligro); padding: 0.5rem 0.75rem; margin: 0; }
+form { display: grid; gap: 1rem; }
+
+.resultado {
+  min-height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 1rem;
+  padding: 2rem 1.5rem; background: var(--papel); color: var(--tinta); text-align: center;
+}
+.resultado.requerido { background: var(--granate); color: #fff; }
+.resultado.noenc { background: #d8d2c9; }
+.resultado .estado { font-size: clamp(3rem, 16vw, 5.5rem); }
+.resultado .cedula { margin: 0; font-size: 1rem; opacity: 0.85; }
+.resultado .nombre { margin: 0 0 1.5rem; font-size: 1.5rem; }

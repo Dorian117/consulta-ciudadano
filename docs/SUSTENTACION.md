@@ -108,3 +108,13 @@
 **P: ¿Por que un token distinto para Fuerza Publica?** R: Para que un token robado de un lado no abra el otro: la audiencia se verifica en cada peticion.
 **P: ¿Para que sirve registrar consultas de cedulas que no existen?** R: Es auditoria: permite saber quien consulto que y detectar uso indebido, incluso de busquedas sin resultado.
 
+## M2 · App movil
+- App Android hecha con Ionic (interfaz) sobre Angular y Capacitor (puente nativo): tres pantallas, Login, Consulta y Resultado.
+- Consulta lee el codigo de barras con la camara (ML Kit, formatos Code 128 y PDF417) y, si no se puede leer, ofrece digitar la identificacion.
+- El resultado se muestra en grande para leerse de lejos: "Requerido" sobre fondo granate, "No requerido" o "No encontrado" con colores neutros, y siempre con el texto.
+- La direccion del servidor esta en un solo archivo; el telefono debe estar en la misma red que el computador.
+- Las peticiones salen por el HTTP nativo de Capacitor, asi no hay que abrir CORS en el servidor.
+
+**P: ¿Por que Ionic y Capacitor y no una app nativa en Kotlin?** R: Reutiliza Angular y el equipo ya lo conoce; Capacitor da acceso a la camara y genera el APK con el mismo codigo web.
+**P: ¿Es seguro enviar la clave por HTTP?** R: No; en desarrollo se permite trafico sin cifrar en la red local, y esta documentado como riesgo. En produccion la API debe ir por HTTPS y se quita esa excepcion.
+
