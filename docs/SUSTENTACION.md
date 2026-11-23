@@ -20,3 +20,13 @@
 **P: ¿Por que no guardan los permisos dentro del token?** R: Porque el token no se puede revocar; con la consulta en cada peticion un cambio de permisos aplica al instante.
 **P: ¿Ocultar un boton es suficiente seguridad?** R: No. Ocultar es comodidad; la seguridad real es requierePermiso en el servidor.
 
+## W2 · API de ciudadanos
+- CRUD completo bajo /api/ciudadanos, en capas: ruta (permiso), controlador (validacion zod), servicio (logica y base de datos).
+- Cada verbo exige su permiso: POST=crear, GET=leer, PUT=actualizar, DELETE=eliminar.
+- La lista admite filtro por estado (Requerido / No requerido), busqueda por cedula, nombres o apellidos, y paginacion con tope de 100.
+- La cedula se guarda como texto para no perder ceros a la izquierda; el indice unico de la base impide duplicados y el error se convierte en 409 CEDULA_DUPLICADA.
+- Los errores salen siempre como { error: { codigo, mensaje } } desde un solo manejador.
+
+**P: ¿Por que la cedula es texto y no numero?** R: Un numero pierde ceros a la izquierda y no es un valor con el que se calcule; es un identificador.
+**P: ¿Como evitan que la busqueda sea un riesgo?** R: El texto se escapa antes de armar la expresion regular y el limite de pagina es maximo 100.
+
