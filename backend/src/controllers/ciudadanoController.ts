@@ -11,9 +11,9 @@ import {
 import { validar } from '../utils/validar';
 
 const obligatorio = (nombre: string) => ({
-    error: (i: { input?: unknown }) => (i.input === undefined ? `${nombre} es obligatorio` : `${nombre} no es válido`),
+    error: (i: { input?: unknown }) => (i.input === undefined ? `${nombre}: dato obligatorio` : `${nombre}: valor no válido`),
 });
-const texto = (nombre: string) => z.string(obligatorio(nombre)).trim().min(1, `${nombre} es obligatorio`).max(80, `${nombre} no puede superar 80 caracteres`);
+const texto = (nombre: string) => z.string(obligatorio(nombre)).trim().min(1, `${nombre}: dato obligatorio`).max(80, `${nombre} no puede superar 80 caracteres`);
 const fecha = (nombre: string) => z.coerce.date(obligatorio(nombre));
 
 const cedula = z

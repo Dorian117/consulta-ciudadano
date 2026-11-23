@@ -37,3 +37,11 @@
 - **Resultado real:** 5 pruebas pasan (3 de sesion + 2 de login); `ng build` sin errores. Verificado en el navegador con un usuario de prueba zz_test_ (no el admin): sin sesion redirige a /login; clave errada muestra "Usuario o contraseña incorrectos"; clave correcta entra a /ciudadanos con las 3 opciones del menu y el nombre y perfil en la barra.
 - **Pendiente:** el usuario de prueba del navegador se borra al cerrar W5.
 
+## Fase W5 · CRUD en pantalla — 2026-11-22 20:26
+- **Archivos:** nuevos `ciudadanos/ciudadano.service.ts` y `ciudadanos.spec.ts`; `ciudadanos/ciudadanos.ts` reemplaza el marcador de W4. Backend: `ciudadanoController.ts` solo cambia el texto de los errores zod ("X: dato obligatorio" / "X: valor no valido", neutro en genero).
+- **Decisiones:** una sola pantalla con tabla, filtros (estado y busqueda), paginacion de 10, formulario de crear/editar y confirmacion de eliminar. Botones Nuevo/Editar/Eliminar segun `sesion.puede()`. Cedula no editable. Los errores del servidor se muestran tal cual.
+- **Probar:** `cd frontend && npx ng test --watch=false`; `cd backend && npm test`.
+- **Resultado real:** frontend 8 pruebas pasan; backend 20 pasan; `ng build` y `tsc` sin errores. En el navegador, con usuario de prueba zz_test_ con todos los permisos: lista de 4 ciudadanos, formulario con fechas vacias mostro los errores del servidor, creacion (aparece "Ciudadano creado"), busqueda filtra a 1, eliminar pide confirmacion con nombre y cedula y borra. Usuario, perfil y permisos de prueba borrados al terminar.
+- **No verificado en navegador:** el boton Editar y el filtro por estado (el PUT y el filtro si estan probados en la API, y el boton en la prueba unitaria de permisos); el comportamiento con un perfil de solo lectura se cubre en la prueba unitaria, no a mano.
+- **Pendiente:** los 4 ciudadanos "Prueba Uno..Cuatro" del script 01 siguen en Atlas (ver W6).
+

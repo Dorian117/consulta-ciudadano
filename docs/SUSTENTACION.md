@@ -50,3 +50,13 @@
 **P: ¿Que pasa si alguien escribe /seguridad en la barra sin permiso?** R: guardOpcion lo devuelve al inicio, y aunque se saltara, el servidor responde 403 en cada peticion.
 **P: ¿Por que el mensaje de error viene del servidor?** R: Para que el texto (incluido el tiempo de bloqueo) viva en un solo lugar y no se desincronice con la regla real.
 
+## W5 · CRUD en pantalla
+- Una pantalla con la tabla de ciudadanos, filtro por estado, buscador y paginacion; el formulario de crear y editar y la confirmacion de eliminar aparecen debajo cuando se necesitan.
+- Los botones Nuevo, Editar y Eliminar dependen de los permisos del menu que mando el servidor.
+- El frontend no repite las reglas de validacion: muestra el mensaje del servidor (cedula duplicada, fecha invalida), asi hay una sola fuente de verdad.
+- La cedula no se edita porque es la llave del registro; eliminar siempre confirma con nombre y cedula.
+- Se probo de punta a punta en el navegador contra la API real, y los botones por permiso con pruebas unitarias.
+
+**P: ¿Ocultar el boton Eliminar impide que alguien borre?** R: No; solo evita confusion. Quien llame a la API sin permiso recibe 403, probado en las pruebas del backend.
+**P: ¿Por que la lista esta paginada?** R: Para no traer toda la base de golpe; el servidor limita a 100 por pagina y la pantalla pide 10.
+
