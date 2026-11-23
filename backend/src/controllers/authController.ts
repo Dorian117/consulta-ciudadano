@@ -1,6 +1,9 @@
 import type { RequestHandler } from 'express';
 import { z } from 'zod';
+import { Perfil } from '../models/Perfil';
+import { Usuario } from '../models/Usuario';
 import { iniciarSesion } from '../services/authService';
+import { obtenerMenu } from '../services/menuService';
 import { validar } from '../utils/validar';
 
 const texto = (nombre: string) =>
@@ -22,6 +25,16 @@ export const login: RequestHandler = async (req, res) => {
     const { cedula, contrasena } = validar(esquemaLogin, req.body ?? {});
     const sesion = await iniciarSesion(cedula, contrasena);
     res.json(sesion);
+};
+
+export const yo: RequestHandler = async (req, res) => {
+    const usuario = await Usuario.findById(req.usuario!.id);
+    const perfil = await Perfil.findById(req.usuario!.perfilId);
+    res.json({ cedula: usuario!.cedula, nombres: usuario!.nombres, perfil: perfil?.nombre ?? '' });
+};
+
+export const menu: RequestHandler = async (req, res) => {
+    res.json(await obtenerMenu(req.usuario!.perfilId));
 };
 
 // 1) El controlador solo hace tres cosas: validar lo que llega, llamar al servicio y responder.

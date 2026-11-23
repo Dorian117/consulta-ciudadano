@@ -1,6 +1,7 @@
 import { once } from 'node:events';
 import type { Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
+import type { Types } from 'mongoose';
 import { app } from '../app';
 import { conectarBasesDeDatos, dbDefensa, dbRegistraduria } from '../config/database';
 import { Ciudadano } from '../models/Ciudadano';
@@ -53,7 +54,7 @@ export async function crearPerfilPrueba() {
     return Perfil.create({ nombre: `zz_test_perfil_${unico()}` });
 }
 
-export async function crearUsuarioPrueba(perfilId: unknown) {
+export async function crearUsuarioPrueba(perfilId: Types.ObjectId) {
     const n = unico();
     return Usuario.create({
         cedula: `99${n}`,
@@ -83,3 +84,5 @@ export async function limpiar(): Promise<void> {
 //    una prueba falla, porque cerrar() se llama en after().
 // 3) Los usuarios de prueba reciben una cedula de 10 digitos que empieza por 99 y termina en una marca de tiempo,
 //    para no chocar con cedulas reales.
+// 4) Los archivos de prueba corren uno tras otro (--test-concurrency=1): limpiar() borra TODO lo zz_test_,
+//    y en paralelo un archivo borraria los datos del otro a mitad de sus pruebas.

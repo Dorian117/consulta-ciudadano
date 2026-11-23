@@ -10,3 +10,13 @@
 **P: ¿Por que el mismo error si la cedula no existe?** R: Para no revelar que cedulas estan registradas (enumeracion de usuarios).
 **P: ¿Como evitan que dos intentos simultaneos se salten el limite?** R: El contador se incrementa con $inc en MongoDB, una operacion atomica.
 
+## W1 · Permisos y menu
+- Un perfil tiene permisos (crear, leer, actualizar, eliminar) sobre cada opcion; es la relacion muchos a muchos de la coleccion permisos.
+- requierePermiso(opcion, accion) se pone en cada ruta despues de requiereSesion: 401 sin sesion, 403 SIN_PERMISO sin permiso.
+- obtenerMenu devuelve solo las opciones con leer: true, ordenadas, y con los 4 permisos para que la pantalla oculte botones.
+- Los permisos se leen de la base en cada peticion, no del token: si se quita un permiso, deja de valer de inmediato.
+- /api/auth/yo y /api/auth/menu alimentan la pantalla despues del login.
+
+**P: ¿Por que no guardan los permisos dentro del token?** R: Porque el token no se puede revocar; con la consulta en cada peticion un cambio de permisos aplica al instante.
+**P: ¿Ocultar un boton es suficiente seguridad?** R: No. Ocultar es comodidad; la seguridad real es requierePermiso en el servidor.
+
