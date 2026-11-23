@@ -139,15 +139,6 @@ rdb.opciones.find().forEach(op => {
     { perfilId: admin._id, opcionId: op._id, crear: true, leer: true, actualizar: true, eliminar: true });
 });
 
-// DATOS DE PRUEBA: Borrarlos BORRARLOS BORRARLOS ANTES DEEEEEEEE
-const ahora = new Date();
-const prueba = [
-    { cedula: "1000000001", nombres: "Ana Maria", apellidos: "Prueba Uno",    fechaNacimiento: ISODate("1990-03-12"), genero: "F", fechaExpedicion: ISODate("2008-04-01"), lugarExpedicion: "Bogota",    lugarNacimiento: "Bogota",    grupoSanguineo: "O+",  estatura: 1.65, estado: "No requerido" },
-    { cedula: "1000000002", nombres: "Carlos",    apellidos: "Prueba Dos",    fechaNacimiento: ISODate("1985-07-30"), genero: "M", fechaExpedicion: ISODate("2003-08-15"), lugarExpedicion: "Medellin",  lugarNacimiento: "Medellin",  grupoSanguineo: "A-",  estatura: 1.78, estado: "Requerido" },
-    { cedula: "1000000003", nombres: "Laura",     apellidos: "Prueba Tres",   fechaNacimiento: ISODate("1998-11-05"), genero: "F", fechaExpedicion: ISODate("2016-12-10"), lugarExpedicion: "Cali",      lugarNacimiento: "Cali",      grupoSanguineo: "B+",  estatura: 1.60, estado: "No requerido" },
-    { cedula: "1000000004", nombres: "Jorge",     apellidos: "Prueba Cuatro", fechaNacimiento: ISODate("1979-01-22"), genero: "M", fechaExpedicion: ISODate("1997-02-03"), lugarExpedicion: "Cartagena", lugarNacimiento: "Cartagena", grupoSanguineo: "AB+", estatura: 1.82, estado: "Requerido" }
-];
-prueba.forEach(c => upsertOne("ciudadanos", { cedula: c.cedula }, { ...c, createdAt: ahora, updatedAt: ahora }));
 
 print("Listo: " + DB_NAME + " | ciudadanos=" + rdb.ciudadanos.countDocuments() +
 " perfiles=" + rdb.perfiles.countDocuments() + " opciones=" + rdb.opciones.countDocuments() +" permisos=" + rdb.permisos.countDocuments());

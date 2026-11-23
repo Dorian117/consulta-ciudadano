@@ -60,3 +60,12 @@
 **P: ¿Ocultar el boton Eliminar impide que alguien borre?** R: No; solo evita confusion. Quien llame a la API sin permiso recibe 403, probado en las pruebas del backend.
 **P: ¿Por que la lista esta paginada?** R: Para no traer toda la base de golpe; el servidor limita a 100 por pagina y la pantalla pide 10.
 
+## W6 · Cierre
+- Se quitaron los datos de prueba del script de base de datos para que una base nueva nazca limpia.
+- El archivo de ejemplo de variables se movio a backend/.env.example y se corrigieron los nombres para que coincidan con lo que lee el codigo; el .env real nunca se sube.
+- El README explica como ejecutar y la bitacora, la API y los pendientes dejan constancia de decisiones y supuestos.
+- Quedaron fuera, por decision de alcance: reportes PDF, gestion de usuarios, cifrado AES y la app movil.
+
+**P: ¿Que hacen con las credenciales?** R: Viven solo en .env (ignorado por git), se leen con la funcion nativa de Node y se validan al arrancar; la clave de Atlas se rota y la app usa un usuario con permisos minimos.
+**P: ¿Que quedo sin hacer y por que?** R: Reportes, gestion de usuarios, AES y la app movil; el plan priorizo login, permisos y CRUD, y lo demas esta documentado como alcance futuro.
+
