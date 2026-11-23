@@ -88,3 +88,13 @@
 **P: ¿Por que pdfmake y no Puppeteer?** R: pdfmake construye el PDF directamente desde datos, sin navegador; es mas liviano y su resultado es predecible.
 **P: ¿Por que el frontend no abre el PDF con un enlace directo?** R: Un enlace no enviaria el token de sesion; con HttpClient el interceptor lo agrega y ademas se pueden mostrar los errores del servidor.
 
+## M0 · Modelos de defensa
+- La base "defensa" guarda lo de Fuerza Publica separado de los ciudadanos: rangos, personal autorizado, usuarios, claves temporales y consultas.
+- Cada modelo replica el esquema de validacion que el script de la base ya impone; asi un error de tipo se detecta en el codigo y, si algo se escapara, tambien lo frena la base.
+- El hash de la contrasena nunca sale en una respuesta (select false y toJSON).
+- Las pruebas escriben en Atlas de verdad para comprobar que modelo y base coinciden.
+- La coleccion de alertas no existe en el script de la base; se deja documentado y se crearia solo si se hace la parte opcional.
+
+**P: ¿Por que dos bases separadas?** R: Los datos de ciudadanos (registraduria) y los de la fuerza publica (defensa) tienen duenos y permisos distintos; separarlos limita el dano si una se compromete.
+**P: ¿Para que repetir las reglas en el modelo si la base ya valida?** R: Para dar mensajes claros al usuario y fallar antes de llegar a la base; la base es la ultima barrera.
+

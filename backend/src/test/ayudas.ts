@@ -5,6 +5,7 @@ import type { Types } from 'mongoose';
 import { app } from '../app';
 import { conectarBasesDeDatos, dbDefensa, dbRegistraduria } from '../config/database';
 import { Ciudadano } from '../models/Ciudadano';
+import { ClaveTemporal, Consulta, PersonalActivo, UsuarioFp, type IUsuarioFp } from '../models/defensa';
 import { Perfil } from '../models/Perfil';
 import { Permiso } from '../models/Permiso';
 import { Usuario } from '../models/Usuario';
@@ -77,6 +78,12 @@ export async function limpiar(): Promise<void> {
     await Usuario.deleteMany({ nombres: PREFIJO });
     await Perfil.deleteMany({ nombre: PREFIJO });
     await Ciudadano.deleteMany({ nombres: PREFIJO });
+
+    const fp = (await UsuarioFp.find({ nombres: PREFIJO }).select('_id')).map((u) => u._id);
+    await Consulta.deleteMany({ usuarioId: { $in: fp } });
+    await ClaveTemporal.deleteMany({ usuarioId: { $in: fp } });
+    await UsuarioFp.deleteMany({ nombres: PREFIJO });
+    await PersonalActivo.deleteMany({ nombres: PREFIJO });
 }
 
 // 1) Cada archivo de prueba arranca la app con app.listen(0): el sistema operativo asigna un puerto libre
@@ -87,3 +94,20 @@ export async function limpiar(): Promise<void> {
 //    para no chocar con cedulas reales.
 // 4) Los archivos de prueba corren uno tras otro (--test-concurrency=1): limpiar() borra TODO lo zz_test_,
 //    y en paralelo un archivo borraria los datos del otro a mitad de sus pruebas.
+
+export async function crearUsuarioFpPrueba(extra: Partial<IUsuarioFp> = {}) {
+    const n = unico();
+    return UsuarioFp.create({
+        cedula: `98${n}`,
+        nombres: `zz_test_fp_${n}`,
+        apellidos: 'Prueba',
+        correo: `zz_test_fp_${n}@prueba.local`,
+        fuerza: 'Policia',
+        rango: 'Patrullero',
+        idFuerza: `ZZ-${n}`,
+        passwordHash: await hashearContraseña(CLAVE_PRUEBA),
+        estadoCuenta: 'activa',
+        debeCambiarPassword: false,
+        ...extra,
+    });
+}

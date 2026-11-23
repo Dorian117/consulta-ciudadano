@@ -69,3 +69,10 @@
 - **No verificado:** el aspecto visual del PDF (no pude renderizarlo: sin pdftoppm y el panel no abre PDF locales); el boton de la pantalla en el navegador contra el servidor real.
 - **Pendiente:** pdfmake imprime en consola un aviso por no tener politica local; es inofensivo.
 
+## Fase M0 · Modelos de la base defensa — 2026-11-23 11:01
+- **Archivos:** `backend/src/models/defensa.ts` (Rango, PersonalActivo, UsuarioFp, ClaveTemporal, Consulta), `test/defensa.test.ts`; `test/ayudas.ts` (crearUsuarioFpPrueba y limpieza de datos FP).
+- **Decisiones:** un modelo por coleccion de `db/02_defensa.js`, sobre `dbDefensa`, con los mismos limites del `$jsonSchema` (la base tiene additionalProperties false). `consultas` sin timestamps y `claves_temporales` solo con createdAt, como declara el script. `passwordHash` con select false y fuera de toJSON. **No hay modelo de alertas:** el script 02 no define esa coleccion (solo se necesitaria en M5).
+- **Probar:** `cd backend && npm test`
+- **Resultado real:** 30 pruebas pasan (4 nuevas). Las pruebas escriben en Atlas: la base acepto usuarios_fp, consultas y claves_temporales, y los datos invalidos se rechazaron. Comprobado que `db/02_defensa.js` ya estaba ejecutado en Atlas (rangos y personal de prueba presentes).
+- **Pendiente:** el personal_activo de prueba (2000000001 a 2000000004) sigue en Atlas para M5.
+
