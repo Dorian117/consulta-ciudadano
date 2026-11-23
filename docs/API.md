@@ -10,6 +10,8 @@ Con sesión: encabezado `Authorization: Bearer <token>`.
 | `GET /api/auth/yo` | sí | — | `{ cedula, nombres, perfil }` |
 | `GET /api/auth/menu` | sí | — | opciones con `leer: true`, ordenadas, con sus 4 permisos |
 | `GET /api/reportes/ciudadanos?estado=Todos, Requerido o No requerido` | sí | reportes / leer | PDF (`application/pdf`); 404 `SIN_RESULTADOS`; 500 `ERROR_PDF` |
+| `POST /api/fp/login` `{ cedula, contrasena }` | no | — | Fuerza Pública: 200 `{ token, usuario }` (token con audiencia `fp`); 401 `CREDENCIALES_INVALIDAS`; 423 `CUENTA_BLOQUEADA` (3 intentos, 15 min) |
+| `GET /api/consulta/:cedula` | sí (token `fp`) | — | `{ cedula, estado, nombres, apellidos }`; si no existe `{ cedula, estado: "No encontrado" }`; registra la consulta en `defensa.consultas`; 400 si la cédula no es de 6 a 10 dígitos |
 | `POST /api/ciudadanos` | sí | ciudadanos / crear | 201 ciudadano; 409 `CEDULA_DUPLICADA` |
 | `GET /api/ciudadanos?estado=&q=&pagina=&limite=` | sí | ciudadanos / leer | `{ datos, total, pagina, limite }` (límite máximo 100) |
 | `GET /api/ciudadanos/:cedula` | sí | ciudadanos / leer | ciudadano; 404 `CIUDADANO_NO_ENCONTRADO` |

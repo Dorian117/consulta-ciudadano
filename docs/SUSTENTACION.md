@@ -98,3 +98,13 @@
 **P: ¿Por que dos bases separadas?** R: Los datos de ciudadanos (registraduria) y los de la fuerza publica (defensa) tienen duenos y permisos distintos; separarlos limita el dano si una se compromete.
 **P: ¿Para que repetir las reglas en el modelo si la base ya valida?** R: Para dar mensajes claros al usuario y fallar antes de llegar a la base; la base es la ultima barrera.
 
+## M1 · Login de Fuerza Publica y consulta
+- Fuerza Publica tiene su propio login (/api/fp/login) contra la base defensa, con las mismas reglas del web: error unico, comparacion de tiempo constante y bloqueo de 15 minutos a los 3 intentos fallidos.
+- El token lleva audiencia "fp": un token de administrador no sirve para consultar y uno de FP no abre rutas web; son dos puertas separadas.
+- /api/consulta/:cedula devuelve el estado (Requerido / No requerido) y el nombre, o "No encontrado" sin nombre.
+- Cada consulta se registra en la coleccion consultas (quien, que cedula, resultado); si no se puede registrar, no se entrega el dato.
+- Una cuenta que se desactiva pierde el acceso al instante, aunque su token no haya vencido.
+
+**P: ¿Por que un token distinto para Fuerza Publica?** R: Para que un token robado de un lado no abra el otro: la audiencia se verifica en cada peticion.
+**P: ¿Para que sirve registrar consultas de cedulas que no existen?** R: Es auditoria: permite saber quien consulto que y detectar uso indebido, incluso de busquedas sin resultado.
+

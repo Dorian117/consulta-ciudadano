@@ -5,6 +5,7 @@ import { manejadorErrores, rutaNoEncontrada } from './middlewares/manejadorError
 import { rutasAuth } from './routes/authRoutes';
 import { rutasCiudadanos } from './routes/ciudadanoRoutes';
 import { rutasReportes } from './routes/reporteRoutes';
+import { rutasConsulta, rutasFp } from './routes/fpRoutes';
 
 export const app = express();
 
@@ -24,6 +25,8 @@ app.get('/api/salud', (_req, res) => {
 app.use('/api/auth', rutasAuth);
 app.use('/api/ciudadanos', rutasCiudadanos);
 app.use('/api/reportes', rutasReportes);
+app.use('/api/fp', rutasFp);
+app.use('/api/consulta', rutasConsulta);
 
 // Apartado para declarar e identificar errores (siempre al final y en este orden)
 app.use(rutaNoEncontrada);

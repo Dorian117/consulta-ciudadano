@@ -7,7 +7,7 @@ export type Audiencia = 'web' | 'fp';
 export interface CargaToken {
     sub: string;
     cedula: string;
-    perfilId: string;
+    perfilId?: string; // solo el token web lo lleva; el de Fuerza Publica no tiene perfil
 }
 
 export function firmarToken(carga: CargaToken, audiencia: Audiencia): string{
@@ -25,7 +25,7 @@ export function verificarToken(token: string, audiencia: Audiencia): CargaToken 
         typeof decodificado === 'string' ||
         typeof decodificado.sub !== 'string' ||
         typeof decodificado.cedula !== 'string' ||
-        typeof decodificado.perfilId !== 'string'
+        (decodificado.perfilId !== undefined && typeof decodificado.perfilId !== 'string')
     ) {
         throw new Error('El token no tiene el formato esperado');
     }

@@ -76,3 +76,11 @@
 - **Resultado real:** 30 pruebas pasan (4 nuevas). Las pruebas escriben en Atlas: la base acepto usuarios_fp, consultas y claves_temporales, y los datos invalidos se rechazaron. Comprobado que `db/02_defensa.js` ya estaba ejecutado en Atlas (rangos y personal de prueba presentes).
 - **Pendiente:** el personal_activo de prueba (2000000001 a 2000000004) sigue en Atlas para M5.
 
+## Fase M1 · Login de Fuerza Publica y consulta — 2026-11-23 11:03
+- **Archivos:** nuevos `services/fpAuthService.ts`, `services/consultaService.ts`, `middlewares/autenticacionFp.ts`, `controllers/fpController.ts`, `routes/fpRoutes.ts`, `test/fp.test.ts`; cambiados `app.ts` (monta /api/fp y /api/consulta) y `utils/jwt.ts` (perfilId opcional: el token FP no lo lleva).
+- **Rutas:** `POST /api/fp/login` (audiencia fp, error unico 401, 3 intentos = 423 por 15 min, cuenta debe estar "activa") y `GET /api/consulta/:cedula` (solo token fp; devuelve estado y nombres, o "No encontrado" sin nombre; registra cada consulta en defensa.consultas).
+- **Decisiones:** la audiencia separa los tokens: el de administrador no consulta y el de FP no abre rutas web (probado). El registro de la consulta se espera antes de responder (sin rastro no se entrega el dato). La logica de bloqueo se repite en vez de compartirse con el login web (anotado como shortcut). El login responde 401 generico para cuenta pendiente. No se agrego CORS al servidor: la app movil usara HTTP nativo de Capacitor (ver M2).
+- **Probar:** `cd backend && npm test`
+- **Resultado real:** 40 pruebas pasan (10 nuevas de FP); `tsc` sin errores. Cubren login correcto, mismo 401, 400, bloqueo 423, 401 sin token y con token web, aislamiento de tokens, consulta Requerido / No requerido / No encontrado, cedula mal formada sin registro, registro de cada consulta, y cuenta desactivada pierde acceso.
+- **Pendiente:** el login no maneja aun `debeCambiarPassword` (cambio de clave en primer ingreso, M5 opcional).
+
