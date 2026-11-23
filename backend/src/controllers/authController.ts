@@ -11,7 +11,7 @@ const esquemaLogin = z.object(
         cedula: texto('La identificación')
             .trim()
             .regex(/^[0-9]{6,10}$/, 'La identificación debe tener entre 6 y 10 dígitos'),
-        contraseña: texto('La contraseña')
+        contrasena: texto('La contraseña')
             .min(1, 'La contraseña es obligatoria')
             .max(128, 'La contraseña es demasiado larga'),
     },
@@ -19,8 +19,8 @@ const esquemaLogin = z.object(
 );
 
 export const login: RequestHandler = async (req, res) => {
-    const { cedula, contraseña } = validar(esquemaLogin, req.body ?? {});
-    const sesion = await iniciarSesion(cedula, contraseña);
+    const { cedula, contrasena } = validar(esquemaLogin, req.body ?? {});
+    const sesion = await iniciarSesion(cedula, contrasena);
     res.json(sesion);
 };
 

@@ -18,7 +18,7 @@ function credencialesInvalidas(): ErrorApp {
 }
 
 async function registrarIntentoFallido(id: Types.ObjectId): Promise<void> {
-    const actualizado = await Usuario.findByIdAndUpdate(id, { $inc: { intentosFallidos: 1 } }, { new: true });
+    const actualizado = await Usuario.findByIdAndUpdate(id, { $inc: { intentosFallidos: 1 } }, { returnDocument: 'after' });
     if (actualizado && actualizado.intentosFallidos >= MAX_INTENTOS) {
         const bloqueadoHasta = new Date(Date.now() + MINUTOS_BLOQUEO * 60_000);
         await Usuario.updateOne({ _id: id }, { $set: { bloqueadoHasta, intentosFallidos: 0 } });
