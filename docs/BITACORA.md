@@ -109,3 +109,10 @@
 - **Resultado real:** 52 pruebas del backend (9 nuevas) y 13 del frontend pasan. Cubren 401/403, permisos por rol con efecto inmediato en el menu, rol protegido, opciones invalidas, contraseña debil, cedula duplicada, usuario FP que inicia sesion y consulta, quitar y devolver el permiso de consulta al rol FP, bloqueo a los 3 intentos y desbloqueo (web y FP).
 - **NO verificado:** la pantalla de Seguridad en el navegador con un administrador real (solo pruebas automaticas con datos simulados); el cambio de permisos de FP desde el telefono.
 - **Pendiente:** editar o desactivar usuarios ya creados, cambiar la clave, y registro de FP con clave temporal (M5).
+
+## Fase M4 · APK Android y publicacion en Render — 2026-11-24
+- **Archivos:** nueva carpeta `mobile/android` (proyecto Android generado por Capacitor), `mobile/src/app/config.ts` (ahora apunta a la API publicada), `mobile/capacitor.config.ts` y `AndroidManifest.xml` (sin trafico HTTP sin cifrar; con permiso de camara), `frontend/angular.json` (sin CSS critico), `docs/DESPLIEGUE.md`.
+- **Que se hizo:** el backend sirve tambien la web compilada y se publico un solo servicio en Render con las bases en Atlas. El APK de depuracion se compila con `gradlew assembleDebug` usando JDK 24 (el JDK 25 de Android Studio no lo soporta el Gradle del proyecto) y queda en `docs/apk/` (ignorado por git: pesa 27 MB).
+- **Problemas encontrados:** (1) faltaba el permiso `CAMERA` en el manifest: el escaner no abria. (2) En la web publicada los estilos no cargaban: la politica de seguridad de helmet bloquea el `onload` con el que Angular carga el CSS; se desactivo esa optimizacion.
+- **Resultado real:** verificado por Sergio en el celular con datos moviles: la web publicada carga con estilos y la app movil consulta contra la API de Render. Del lado del PC se comprobo `/api/salud` (dos bases en true), la web (200) y la API protegida (401).
+- **Pendiente:** el plan gratuito de Render duerme el servicio (abrir `/api/salud` antes de la demo); quitar `0.0.0.0/0` de Atlas y rotar la clave despues de la demo; APK firmado de produccion no se genero.

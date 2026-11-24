@@ -6,7 +6,6 @@ const config: CapacitorConfig = {
   webDir: 'dist/movil/browser',
   server: {
     // Solo desarrollo: permite HTTP sin cifrar hacia la API en la red local (Android lo bloquea por defecto).
-    cleartext: true,
   },
   plugins: {
     // Las peticiones salen por el HTTP nativo del telefono: no pasan por CORS y no hace falta abrirlo en el servidor.

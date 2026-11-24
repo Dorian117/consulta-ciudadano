@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Consulta Ciudadano</string>
+    <string name="title_activity_main">Consulta Ciudadano</string>
+    <string name="package_name">com.consultaciudadano.movil</string>
+    <string name="custom_url_scheme">com.consultaciudadano.movil</string>
+</resources>
