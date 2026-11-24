@@ -6,6 +6,7 @@ import { rutasAuth } from './routes/authRoutes';
 import { rutasCiudadanos } from './routes/ciudadanoRoutes';
 import { rutasReportes } from './routes/reporteRoutes';
 import { rutasConsulta, rutasFp } from './routes/fpRoutes';
+import { rutasSeguridad } from './routes/seguridadRoutes';
 
 export const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/ciudadanos', rutasCiudadanos);
 app.use('/api/reportes', rutasReportes);
 app.use('/api/fp', rutasFp);
 app.use('/api/consulta', rutasConsulta);
+app.use('/api/seguridad', rutasSeguridad);
 
 // Apartado para declarar e identificar errores (siempre al final y en este orden)
 app.use(rutaNoEncontrada);

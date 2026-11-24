@@ -127,3 +127,13 @@
 **P: ¿Por que Code 128 y no el codigo de la cedula real?** R: El PDF417 de la cedula es binario y su lectura e interpretacion requiere el formato oficial; como es un proyecto academico, se emula con una identificacion impresa y se documenta como supuesto.
 **P: ¿Como saben que la hoja no esta desactualizada?** R: Una prueba compara cada resultado esperado de la hoja con lo que hay en la base y falla si cambia.
 
+
+## W9 · Seguridad: roles, permisos y usuarios
+- La opcion Seguridad deja al administrador decidir que puede hacer cada rol: marca casillas de crear, leer, actualizar y eliminar por opcion y guarda. El cambio vale de inmediato porque los permisos se leen de la base en cada peticion.
+- El rol Fuerza Publica tiene un solo permiso, "consultar antecedentes": si el administrador lo quita, la app movil recibe 403 aunque el usuario tenga sesion.
+- Tambien crea usuarios nuevos: de la Registraduria (con un rol) o de Fuerza Publica (con fuerza, rango e identificador). Las claves se guardan con hash y deben cumplir la politica.
+- Tras 3 intentos fallidos, web o movil, la cuenta se bloquea 15 minutos; el administrador puede desbloquearla.
+- El rol Administrador no se puede modificar para que nadie se quede sin acceso.
+
+**P: ¿Que pasa si le quitan un permiso a alguien que ya inicio sesion?** R: Pierde el acceso en la siguiente peticion, porque el token no lleva permisos: se consultan en la base cada vez.
+**P: ¿Como evitan que el administrador se bloquee a si mismo?** R: El rol Administrador esta protegido en el servidor; el intento responde 409 aunque se salte la pantalla.

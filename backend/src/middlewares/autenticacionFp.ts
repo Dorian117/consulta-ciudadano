@@ -1,6 +1,7 @@
 import type { RequestHandler } from 'express';
 import { TokenExpiredError } from 'jsonwebtoken';
 import { UsuarioFp } from '../models/defensa';
+import { fpPuedeConsultar } from '../services/seguridadService';
 import { ErrorApp } from '../utils/errores';
 import { verificarToken } from '../utils/jwt';
 
@@ -28,6 +29,12 @@ export const requiereSesionFp: RequestHandler = async (req, _res, next) => {
     if (!usuario || usuario.estadoCuenta !== 'activa') throw new ErrorApp(401, 'NO_AUTENTICADO', 'Debe iniciar sesión');
 
     req.usuarioFp = { id: usuario.id, cedula: usuario.cedula };
+    next();
+};
+
+// El administrador decide desde "Seguridad" si el rol Fuerza Publica puede consultar; se verifica en cada peticion.
+export const exigirPermisoFp: RequestHandler = async (_req, _res, next) => {
+    if (!(await fpPuedeConsultar())) throw new ErrorApp(403, 'SIN_PERMISO', 'No tiene permiso para realizar esta acción');
     next();
 };
 

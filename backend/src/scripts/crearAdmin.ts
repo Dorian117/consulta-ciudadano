@@ -2,6 +2,7 @@ import { conectarBasesDeDatos, dbDefensa, dbRegistraduria }  from "../config/dat
 import { datosAdminInicial } from "../config/env";
 import { Perfil } from "../models/Perfil";
 import { Usuario } from "../models/Usuario";
+import { asegurarPerfilFp } from "../services/seguridadService";
 import { hashearContraseña } from "../utils/contraseña";
 
 const NOMBRE_PERFIL_ADMIN = 'Administrador';
@@ -14,6 +15,7 @@ async function crearAdmin(): Promise<void> {
     if (!perfil){
         throw new Error(`No existe el perfil ${NOMBRE_PERFIL_ADMIN}; ejecute primero db/01_registraduria.js`);
     }
+    await asegurarPerfilFp();
     if (await Usuario.exists({ cedula: datos.cedula })) {
         console.log(`Ya existe un usuario con la cédula ${datos.cedula}; no se modificó nada`);
         return;

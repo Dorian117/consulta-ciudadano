@@ -6,8 +6,9 @@ import { guardSesion } from './core/sesion.guard';
 import { SesionService } from './core/sesion.service';
 import { Layout } from './layout/layout';
 import { Login } from './login/login';
-import { Proximamente, SinAcceso } from './paginas/paginas';
+import { SinAcceso } from './paginas/paginas';
 import { Reportes } from './reportes/reportes';
+import { Seguridad } from './seguridad/seguridad';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -19,7 +20,7 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: () => inject(SesionService).menu()[0]?.ruta.slice(1) ?? 'sin-acceso' },
       { path: 'ciudadanos', component: Ciudadanos, canActivate: [guardOpcion('ciudadanos')] },
       { path: 'reportes', component: Reportes, canActivate: [guardOpcion('reportes')] },
-      { path: 'seguridad', component: Proximamente, canActivate: [guardOpcion('seguridad')] },
+      { path: 'seguridad', component: Seguridad, canActivate: [guardOpcion('seguridad')] },
       { path: 'sin-acceso', component: SinAcceso },
     ],
   },

@@ -11,7 +11,7 @@
 - DELETE de ciudadano responde 200 con `{ mensaje }` (no 204); la lista responde `{ datos, total, pagina, limite }`.
 - La cedula de un ciudadano no se puede cambiar (PUT).
 - El token de sesion vive en sessionStorage (se pierde al cerrar la pestana). Alternativa: cookie httpOnly.
-- La opcion `seguridad` del menu abre una pagina "Proximamente". `reportes` ya tiene su pantalla (W7).
+- La opcion `seguridad` ya tiene pantalla (W9): permisos por rol, crear roles y usuarios, desbloquear. Falta editar o desactivar usuarios y cambiar claves.
 - Los permisos se consultan en la base en cada peticion, no se guardan en el token.
 - El frontend no tiene pruebas end-to-end automaticas; se verifico a mano en el navegador (ver BITACORA, W4 y W5).
 

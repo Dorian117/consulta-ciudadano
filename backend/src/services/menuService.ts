@@ -14,7 +14,8 @@ export interface ItemMenu {
 
 export async function obtenerMenu(perfilId: string): Promise<ItemMenu[]> {
     const permisos = await Permiso.find({ perfilId, leer: true });
-    const opciones = await Opcion.find({ _id: { $in: permisos.map((p) => p.opcionId) } });
+    // consultaFp es el permiso de la app movil de Fuerza Publica: no es una pantalla de la web
+    const opciones = await Opcion.find({ _id: { $in: permisos.map((p) => p.opcionId) }, codigo: { $ne: 'consultaFp' } });
     const porId = new Map(permisos.map((p) => [p.opcionId.toString(), p]));
     return opciones
         .map((o) => {
