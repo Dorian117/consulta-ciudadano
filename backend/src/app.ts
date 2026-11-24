@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import express from 'express';
 import helmet from 'helmet';
 import { dbRegistraduria, dbDefensa} from './config/database';
@@ -29,6 +31,17 @@ app.use('/api/reportes', rutasReportes);
 app.use('/api/fp', rutasFp);
 app.use('/api/consulta', rutasConsulta);
 app.use('/api/seguridad', rutasSeguridad);
+
+// Si la web ya esta compilada (frontend/dist), la misma API la sirve: asi se publica todo en una sola direccion.
+const webCompilada = join(__dirname, '../../frontend/dist/consulta/browser');
+if (existsSync(webCompilada)) {
+    app.use(express.static(webCompilada));
+    // cualquier ruta de la web (que no sea /api) devuelve index.html: Angular resuelve la ruta en el navegador
+    app.use((req, res, next) => {
+        if (req.method !== 'GET' || req.path.startsWith('/api/')) return next();
+        res.sendFile(join(webCompilada, 'index.html'));
+    });
+}
 
 // Apartado para declarar e identificar errores (siempre al final y en este orden)
 app.use(rutaNoEncontrada);
